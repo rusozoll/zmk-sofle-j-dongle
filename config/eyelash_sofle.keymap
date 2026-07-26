@@ -1,5 +1,5 @@
-#define ZMK_POINTING_DEFAULT_MOVE_VAL 1200  // 600
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 35    // 10
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 1200
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 35
 
 #include <input/processors.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
@@ -21,13 +21,12 @@
 };
 
 &mmv_input_listener { input-processors = <&zip_xy_scaler 2 1>; };
-
 &msc_input_listener { input-processors = <&zip_scroll_scaler 2 1>; };
 
 &msc {
-    acceleration-exponent = <0>;      // 0
-    time-to-max-speed-ms = <0>;       // 300
-    delay-ms = <0>;                   // 0
+    acceleration-exponent = <0>;
+    time-to-max-speed-ms = <0>;
+    delay-ms = <0>;
 };
 
 &mmv {
@@ -36,18 +35,41 @@
 };
 
 / {
-    /* 
-     * COMBO: While holding BoardControl (layer 2), pressing F (pos 30) 
-     * and J (pos 33) toggles Layer 4 (Home Row Mods Overlay) on and off.
-     */
-    combos {
-        compatible = "zmk,combos";
-        
-        combo_toggle_hrm {
-            timeout-ms = <50>;
-            key-positions = <30 33>; 
-            bindings = <&tog 4>;
-            layers = <2>; /* Active ONLY on Layer 2 (BoardControl) */
+    behaviors {
+        /* Left Hand Home Row Mods - Triggers ONLY when right-hand keys are pressed */
+        hm_left: home_row_mod_left {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            flavor = "balanced";
+            /* Right hand key indices + right thumb cluster */
+            hold-trigger-key-positions = <
+                 7  8  9 10 11 12
+                20 21 22 23 24 25
+                33 34 35 36 37 38
+                46 47 48 49 50 51
+                   53 54 55 56 57
+            >;
+            bindings = <&kp>, <&kp>;
+        };
+
+        /* Right Hand Home Row Mods - Triggers ONLY when left-hand keys are pressed */
+        hm_right: home_row_mod_right {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            flavor = "balanced";
+            /* Left hand key indices + left thumb cluster */
+            hold-trigger-key-positions = <
+                 0  1  2  3  4  5
+                13 14 15 16 17 18
+                26 27 28 29 30 31
+                39 40 41 42 43 44
+                   52 53 54 55 56
+            >;
+            bindings = <&kp>, <&kp>;
         };
     };
 
@@ -55,7 +77,6 @@
         compatible = "zmk,behavior-sensor-rotate";
         #sensor-binding-cells = <0>;
         bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
-
         tap-ms = <100>;
     };
 
@@ -79,7 +100,7 @@
     keymap {
         compatible = "zmk,keymap";
 
-        /* Layer 0: Pure, native AlphaNum (Zero delay, instant key repeat) */
+        /* Layer 0: Pure AlphaNum (Zero latency, instant repeat) */
         layer0 {
             bindings = <
 &kp GRAVE   &kp N1     &kp N2        &kp N3        &kp N4    &kp N5       &kp UP_ARROW     &kp N6     &kp N7     &kp N8     &kp N9           &kp N0      &kp BACKSPACE
@@ -89,7 +110,6 @@
 &kp C_MUTE  &kp LCTRL  &kp LEFT_GUI  &kp LEFT_ALT  &kp ENTER &mo 1        &kp ENTER        &none      &kp SPACE  &mo 2      &kp RCTRL        &kp DELETE
             >;
             sensor-bindings = <&scroll_encoder>;
-           
             display-name = "AlphaNum";
         };
 
@@ -101,20 +121,19 @@
 &none      &none      &none          &none           &none       &none      &mmv MOVE_RIGHT  &none       &none       &kp INSERT  &kp F11    &kp F12           &none
 &kp C_MUTE &kp LCTRL  &kp LEFT_GUI   &kp LEFT_ALT    &kp ENTER   &mo 1      &mkp LCLK        &none       &kp SPACE   &mo 2       &kp RCTRL  &kp DELETE
             >;
-
             display-name = "MoveMouseMedia";
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
         };
 
+        /* Layer 2: Board Control (&tog 4 assigned to the unused right thumb position) */
         layer_2 {
             bindings = <
 &none      &bt BT_SEL 0 &bt BT_SEL 1   &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &none     &rgb_ug RGB_ON  &rgb_ug RGB_BRI &rgb_ug RGB_HUI &rgb_ug RGB_SPI &rgb_ug RGB_SAI &rgb_ug RGB_EFF
 &none      &bt BT_CLR   &bt BT_CLR_ALL &none        &none        &none        &none     &rgb_ug RGB_OFF &rgb_ug RGB_BRD &rgb_ug RGB_HUD &rgb_ug RGB_SPD &rgb_ug RGB_SAD &rgb_ug RGB_EFR
 &none      &out OUT_USB &out OUT_BLE   &none        &none        &none        &none     &none           &none           &none           &none           &none           &none
 &none      &sys_reset   &soft_off      &bootloader  &none        &none        &none     &none           &none           &sys_reset      &soft_off       &bootloader     &none
-&kp C_MUTE &kp LCTRL    &kp LEFT_GUI   &kp LEFT_ALT &kp ENTER    &mo 1        &mkp LCLK &none           &kp SPACE       &mo 2           &kp RCTRL       &kp DELETE
+&kp C_MUTE &kp LCTRL    &kp LEFT_GUI   &kp LEFT_ALT &kp ENTER    &mo 1        &mkp LCLK &tog 4          &kp SPACE       &mo 2           &kp RCTRL       &kp DELETE
             >;
-
             display-name = "BoardControl";
             sensor-bindings = <&scroll_encoder>;
         };
@@ -127,22 +146,20 @@
 &none      &kp Z     &kp X        &kp C        &kp V     &none &none &kp KP_N1   &kp KP_N2     &kp KP_N3        &kp KP_ENTER  &none      &kp KP_ENTER 
 &kp C_MUTE &kp LCTRL &kp LEFT_GUI &kp LEFT_ALT &kp ENTER &mo 1 &none &kp KP_N0   &kp KP_N0     &kp KP_DOT       &kp KP_ENTER  &kp KP_ENTER         
             >;
-
             display-name = "10key";
             sensor-bindings = <&scroll_encoder>;
         };
 
-        /* Layer 4: Home Row Mods Overlay (Toggled ON/OFF via BoardControl + F + J combo) */
+        /* Layer 4: Bilateral Home Row Mods Overlay */
         layer_4 {
             bindings = <
-&trans  &trans    &trans    &trans    &trans    &trans  &trans  &trans  &trans     &trans     &trans    &trans    &trans
-&trans  &trans    &trans    &trans    &trans    &trans  &trans  &trans  &trans     &trans     &trans    &trans    &trans
-&trans  &kp LGUI  &kp LALT  &kp LCTRL &kp LSHFT &trans  &trans  &trans  &kp RSHFT  &kp RCTRL  &kp RALT  &kp RGUI  &trans
-&trans  &trans    &trans    &trans    &trans    &trans  &trans  &trans  &trans     &trans     &trans    &trans    &trans
-&trans  &trans    &trans    &trans    &trans    &trans  &trans  &trans  &trans     &trans     &trans    &trans
+&trans  &trans                &trans               &trans                &trans                &trans  &trans  &trans  &trans                 &trans                &trans               &trans                 &trans
+&trans  &trans                &trans               &trans                &trans                &trans  &trans  &trans  &trans                 &trans                &trans               &trans                 &trans
+&trans  &hm_left LGUI A       &hm_left LALT S      &hm_left LCTRL D      &hm_left LSHFT F      &trans  &trans  &trans  &hm_right RSHFT J      &hm_right RCTRL K     &hm_right RALT L     &hm_right RGUI SEMI    &trans
+&trans  &trans                &trans               &trans                &trans                &trans  &trans  &trans  &trans                 &trans                &trans               &trans                 &trans
+&trans  &trans                &trans               &trans                &trans                &trans  &trans  &trans  &trans                 &trans                &trans               &trans
             >;
-
-            display-name = "HRM_Overlay";
+            display-name = "BilateralHRM";
             sensor-bindings = <&scroll_encoder>;
         };
     };
