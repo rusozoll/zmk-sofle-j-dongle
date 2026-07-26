@@ -209,7 +209,7 @@ behaviors {
 &kp C_MUTE  &trans  &trans   &trans  &trans  &none    &none  &kp KP_N0   &kp KP_N0     &kp KP_DOT       &kp KP_ENTER  &trans
             >;
 
-            display-name = "10key"
+            display-name = "10key";
             sensor-bindings = <&scroll_encoder>;
         };
     };
