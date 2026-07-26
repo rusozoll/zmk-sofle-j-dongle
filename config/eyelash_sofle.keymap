@@ -70,90 +70,82 @@
     };
 
 behaviors {
-        
-        // ---------------------------------------------------------------------
-        // 1. CUSTOM HOLD-TAP (Handles timing + prior idle protection)
-        // ---------------------------------------------------------------------
-        hrm: home_row_mod {
+        /* Shared hold-tap logic triggered on the 2nd tap */
+        hm_mod: home_row_mod_hold {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            flavor = "balanced";
             tapping-term-ms = <TAPPING_TERM_MS>;
             require-prior-idle-ms = <PRIOR_IDLE_MS>;
+            flavor = "hold-preferred";
             bindings = <&kp>, <&kp>;
         };
 
-        // ---------------------------------------------------------------------
-        // 2. TAP-DANCES (Uses &hrm instead of default &mt)
-        // ---------------------------------------------------------------------
+        /* ================= LEFT HAND (GACS) ================= */
 
-        // --- LEFT HAND HOME ROW MOD TAP-DANCES (GACS) ---
-        
-        // Left Pinky: 'A' or GUI
-        hm_a: hrm_a {
+        /* A: Single tap/hold = A | Double tap/hold = LGUI */
+        td_a: tap_dance_a {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <TAPPING_TERM_MS>;
-            bindings = <&mt LGUI A>, <&kp A>;
+            bindings = <&kp A>, <&hm_mod LGUI A>;
         };
 
-        // Left Ring: 'S' or ALT
-        hm_s: hrm_s {
+        /* S: Single tap/hold = S | Double tap/hold = LALT */
+        td_s: tap_dance_s {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <TAPPING_TERM_MS>;
-            bindings = <&mt LALT S>, <&kp S>;
+            bindings = <&kp S>, <&hm_mod LALT S>;
         };
 
-        // Left Middle: 'D' or CTRL
-        hm_d: hrm_d {
+        /* D: Single tap/hold = D | Double tap/hold = LCTRL */
+        td_d: tap_dance_d {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <TAPPING_TERM_MS>;
-            bindings = <&mt LCTRL D>, <&kp D>;
+            bindings = <&kp D>, <&hm_mod LCTRL D>;
         };
 
-        // Left Index: 'F' or SHIFT
-        hm_f: hrm_f {
+        /* F: Single tap/hold = F | Double tap/hold = LSHFT */
+        td_f: tap_dance_f {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <TAPPING_TERM_MS>;
-            bindings = <&mt LSHFT F>, <&kp F>;
+            bindings = <&kp F>, <&hm_mod LSHFT F>;
         };
 
+        /* ================= RIGHT HAND (SCAG) ================= */
 
-        // --- RIGHT HAND HOME ROW MOD TAP-DANCES (SCA-G) ---
-
-        // Right Index: 'J' or SHIFT
-        hm_j: hrm_j {
+        /* J: Single tap/hold = J | Double tap/hold = RSHFT */
+        td_j: tap_dance_j {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <TAPPING_TERM_MS>;
-            bindings = <&mt RSHFT J>, <&kp J>;
+            bindings = <&kp J>, <&hm_mod RSHFT J>;
         };
 
-        // Right Middle: 'K' or CTRL
-        hm_k: hrm_k {
+        /* K: Single tap/hold = K | Double tap/hold = RCTRL */
+        td_k: tap_dance_k {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <TAPPING_TERM_MS>;
-            bindings = <&mt RCTRL K>, <&kp K>;
+            bindings = <&kp K>, <&hm_mod RCTRL K>;
         };
 
-        // Right Ring: 'L' or ALT
-        hm_l: hrm_l {
+        /* L: Single tap/hold = L | Double tap/hold = RALT */
+        td_l: tap_dance_l {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <TAPPING_TERM_MS>;
-            bindings = <&mt RALT L>, <&kp L>;
+            bindings = <&kp L>, <&hm_mod RALT L>;
         };
 
-        // Right Pinky: ';' or GUI
-        hm_semi: hrm_semi {
+        /* SEMI: Single tap/hold = SEMI | Double tap/hold = RGUI */
+        td_semi: tap_dance_semi {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <TAPPING_TERM_MS>;
-            bindings = <&mt RGUI SEMI>, <&kp SEMI>;
+            bindings = <&kp SEMI>, <&hm_mod RGUI SEMI>;
         };
     };
 
@@ -164,7 +156,7 @@ behaviors {
             bindings = <
 &kp GRAVE   &kp N1     &kp N2        &kp N3        &kp N4    &kp N5       &kp UP_ARROW     &kp N6     &kp N7     &kp N8     &kp N9           &kp N0      &kp BACKSPACE
 &kp TAB     &kp Q      &kp W         &kp E         &kp R     &kp T        &kp DOWN_ARROW   &kp Y      &kp U      &kp I      &kp O            &kp P       &kp BSLH
-&kp ESC     &hm_a      &hm_s         &hm_d         &hm_f     &kp G        &kp LEFT_ARROW   &kp H      &hm_j      &hm_k      &hm_l            &hm_semi    &kp APOS
+&kp ESC     &td_a      &td_s         &td_d         &td_f     &kp G        &kp LEFT_ARROW   &kp H      &td_j      &td_k      &td_l            &td_semi    &kp APOS
 &kp LSHFT   &kp Z      &kp X         &kp C         &kp V     &kp B        &kp RIGHT_ARROW  &kp N      &kp M      &kp COMMA  &kp DOT          &kp FSLH    &kp RSHFT
 &kp C_MUTE  &kp LCTRL  &kp LEFT_GUI  &kp LEFT_ALT  &kp ENTER &mo 1        &kp ENTER        &none      &kp SPACE  &mo 2      &kp RCTRL        &kp DELETE
             >;
