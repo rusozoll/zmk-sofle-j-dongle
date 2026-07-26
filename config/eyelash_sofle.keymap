@@ -196,7 +196,7 @@ behaviors {
 &kp C_MUTE  &trans        &trans          &trans        &trans        &none          &none     &none            &trans           &none            &trans            &trans
             >;
 
-            display-name = "BoardControl"
+            display-name = "BoardControl";
             sensor-bindings = <&scroll_encoder>;
         };
 
