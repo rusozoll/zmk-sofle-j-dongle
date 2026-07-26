@@ -1,3 +1,16 @@
+/* ================= Centralized Timing Parameters ================= */
+
+/* 1. Window to register the 2nd tap. Keep short (~130-150ms) to stop 
+ *    double-letters (e.g., "ll") from being eaten and to speed up holds. */
+#define TD_TERM_MS   140
+
+/* 2. How long you must hold on the 2nd tap to latch the modifier. */
+#define HOLD_TERM_MS 200
+
+/* 3. Pause required before a double-tap triggers a shortcut. 
+ *    Prevents active typing rolls from triggering mods. */
+#define PRIOR_IDLE_MS 175
+
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1200  // 600
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 35    // 10
 
@@ -36,21 +49,6 @@
 };
 
 / {
-    /* 
-     * COMBO: While holding BoardControl (layer 2), pressing F (pos 30) 
-     * and J (pos 33) toggles Layer 4 (Home Row Mods Overlay) on and off.
-     */
-    combos {
-        compatible = "zmk,combos";
-        
-        combo_toggle_hrm {
-            timeout-ms = <50>;
-            key-positions = <30 33>; 
-            bindings = <&tog 4>;
-            layers = <2>; /* Active ONLY on Layer 2 (BoardControl) */
-        };
-    };
-
     scroll_encoder: scroll_encoder {
         compatible = "zmk,behavior-sensor-rotate";
         #sensor-binding-cells = <0>;
@@ -76,15 +74,98 @@
         };
     };
 
+behaviors {
+        /* Shared hold-tap logic triggered strictly on the 2nd tap */
+        hm_mod: home_row_mod_hold {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <HOLD_TERM_MS>;
+            require-prior-idle-ms = <PRIOR_IDLE_MS>;
+            flavor = "hold-preferred";
+            
+            /* Emits the tap character if the hold wasn't intended */
+            retro-tap; 
+            
+            bindings = <&kp>, <&kp>;
+        };
+
+        /* ================= LEFT HAND (GACS) ================= */
+
+        /* A: Single tap/hold = A | Double tap/hold = LGUI */
+        td_a: tap_dance_a {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <TD_TERM_MS>;
+            bindings = <&kp A>, <&hm_mod LGUI A>;
+        };
+
+        /* S: Single tap/hold = S | Double tap/hold = LALT */
+        td_s: tap_dance_s {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <TD_TERM_MS>;
+            bindings = <&kp S>, <&hm_mod LALT S>;
+        };
+
+        /* D: Single tap/hold = D | Double tap/hold = LCTRL */
+        td_d: tap_dance_d {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <TD_TERM_MS>;
+            bindings = <&kp D>, <&hm_mod LCTRL D>;
+        };
+
+        /* F: Single tap/hold = F | Double tap/hold = LSHFT */
+        td_f: tap_dance_f {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <TD_TERM_MS>;
+            bindings = <&kp F>, <&hm_mod LSHFT F>;
+        };
+
+        /* ================= RIGHT HAND (SCAG) ================= */
+
+        /* J: Single tap/hold = J | Double tap/hold = RSHFT */
+        td_j: tap_dance_j {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <TD_TERM_MS>;
+            bindings = <&kp J>, <&hm_mod RSHFT J>;
+        };
+
+        /* K: Single tap/hold = K | Double tap/hold = RCTRL */
+        td_k: tap_dance_k {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <TD_TERM_MS>;
+            bindings = <&kp K>, <&hm_mod RCTRL K>;
+        };
+
+        /* L: Single tap/hold = L | Double tap/hold = RALT */
+        td_l: tap_dance_l {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <TD_TERM_MS>;
+            bindings = <&kp L>, <&hm_mod RALT L>;
+        };
+
+        /* SEMI: Single tap/hold = SEMI | Double tap/hold = RGUI */
+        td_semi: tap_dance_semi {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <TD_TERM_MS>;
+            bindings = <&kp SEMI>, <&hm_mod RGUI SEMI>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
-        /* Layer 0: Pure, native AlphaNum (Zero delay, instant key repeat) */
         layer0 {
             bindings = <
 &kp GRAVE   &kp N1     &kp N2        &kp N3        &kp N4    &kp N5       &kp UP_ARROW     &kp N6     &kp N7     &kp N8     &kp N9           &kp N0      &kp BACKSPACE
 &kp TAB     &kp Q      &kp W         &kp E         &kp R     &kp T        &kp DOWN_ARROW   &kp Y      &kp U      &kp I      &kp O            &kp P       &kp BSLH
-&kp ESC     &kp A      &kp S         &kp D         &kp F     &kp G        &kp LEFT_ARROW   &kp H      &kp J      &kp K      &kp L            &kp SEMI    &kp APOS
+&kp ESC     &td_a      &td_s         &td_d         &td_f     &kp G        &kp LEFT_ARROW   &kp H      &td_j      &td_k      &td_l            &td_semi    &kp APOS
 &kp LSHFT   &kp Z      &kp X         &kp C         &kp V     &kp B        &kp RIGHT_ARROW  &kp N      &kp M      &kp COMMA  &kp DOT          &kp FSLH    &kp RSHFT
 &kp C_MUTE  &kp LCTRL  &kp LEFT_GUI  &kp LEFT_ALT  &kp ENTER &mo 1        &kp ENTER        &none      &kp SPACE  &mo 2      &kp RCTRL        &kp DELETE
             >;
@@ -99,11 +180,12 @@
 &none      &none      &mkp LCLK      &mkp MCLK       &mkp RCLK   &mkp MB4   &mmv MOVE_DOWN   &kp PG_UP   &kp END     &kp UP      &kp HOME   &kp MINUS         &kp EQUAL
 &none      &none      &none          &none           &none       &mkp MB5   &mmv MOVE_LEFT   &kp PG_DN   &kp LEFT    &kp DOWN    &kp RIGHT  &kp LEFT_BRACKET  &kp RIGHT_BRACKET
 &none      &none      &none          &none           &none       &none      &mmv MOVE_RIGHT  &none       &none       &kp INSERT  &kp F11    &kp F12           &none
-&kp C_MUTE &kp LCTRL  &kp LEFT_GUI   &kp LEFT_ALT    &kp ENTER   &mo 1      &mkp LCLK        &none       &kp SPACE   &mo 2       &kp RCTRL  &kp DELETE
+&kp C_MUTE &kp LCTRL  &kp LEFT_GUI   &kp LEFT_ALT    &kVp ENTER   &mo 1      &mkp LCLK        &none       &kp SPACE   &mo 2       &kp RCTRL  &kp DELETE
             >;
 
             display-name = "MoveMouseMedia";
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
+            
         };
 
         layer_2 {
@@ -125,25 +207,14 @@
 &none      &none     &none        &none        &none     &none &none &kp KP_N7   &kp KP_N8     &kp KP_N9        &kp KP_PLUS   &none      &kp BACKSPACE
 &none      &none     &none        &none        &none     &none &none &kp KP_N4   &kp KP_N5     &kp KP_N6        &kp KP_PLUS   &none      &kp KP_ENTER
 &none      &kp Z     &kp X        &kp C        &kp V     &none &none &kp KP_N1   &kp KP_N2     &kp KP_N3        &kp KP_ENTER  &none      &kp KP_ENTER 
-&kp C_MUTE &kp LCTRL &kp LEFT_GUI &kp LEFT_ALT &kp ENTER &mo 1 &none &kp KP_N0   &kp KP_N0     &kp KP_DOT       &kp KP_ENTER  &kp KP_ENTER         
+&kp C_MUTE &kp LCTRL &kp LEFT_GUI &kp LEFT_ALT &kp ENTER &mo 1 &none &kp KP_N0   &kp KP_N0     &KP_DOT          &kp KP_ENTER  &kp KP_ENTER         
             >;
 
             display-name = "10key";
             sensor-bindings = <&scroll_encoder>;
         };
-
-        /* Layer 4: Home Row Mods Overlay (Toggled ON/OFF via BoardControl + F + J combo) */
-        layer_4 {
-            bindings = <
-&trans  &trans    &trans    &trans    &trans    &trans  &trans  &trans  &trans     &trans     &trans    &trans    &trans
-&trans  &trans    &trans    &trans    &trans    &trans  &trans  &trans  &trans     &trans     &trans    &trans    &trans
-&trans  &kp LGUI  &kp LALT  &kp LCTRL &kp LSHFT &trans  &trans  &trans  &kp RSHFT  &kp RCTRL  &kp RALT  &kp RGUI  &trans
-&trans  &trans    &trans    &trans    &trans    &trans  &trans  &trans  &trans     &trans     &trans    &trans    &trans
-&trans  &trans    &trans    &trans    &trans    &trans  &trans  &trans  &trans     &trans     &trans    &trans
-            >;
-
-            display-name = "HRM_Overlay";
-            sensor-bindings = <&scroll_encoder>;
-        };
     };
-};s
+};
+
+
+
