@@ -1,10 +1,15 @@
-// =============================================================================
-// GLOBAL TIMING CONFIGURATION
-// =============================================================================
-// Adjust these values to tune your home row mods across the entire keyboard!
+/* ================= Centralized Timing Parameters ================= */
 
-#define TAPPING_TERM_MS 200
-#define PRIOR_IDLE_MS   150
+/* 1. Window to register the 2nd tap. Keep short (~130-150ms) to stop 
+ *    double-letters (e.g., "ll") from being eaten and to speed up holds. */
+#define TD_TERM_MS   140
+
+/* 2. How long you must hold on the 2nd tap to latch the modifier. */
+#define HOLD_TERM_MS 200
+
+/* 3. Pause required before a double-tap triggers a shortcut. 
+ *    Prevents active typing rolls from triggering mods. */
+#define PRIOR_IDLE_MS 175
 
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1200  // 600
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 35    // 10
@@ -70,13 +75,17 @@
     };
 
 behaviors {
-        /* Shared hold-tap logic triggered on the 2nd tap */
+        /* Shared hold-tap logic triggered strictly on the 2nd tap */
         hm_mod: home_row_mod_hold {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping-term-ms = <TAPPING_TERM_MS>;
+            tapping-term-ms = <HOLD_TERM_MS>;
             require-prior-idle-ms = <PRIOR_IDLE_MS>;
             flavor = "hold-preferred";
+            
+            /* Emits the tap character if the hold wasn't intended */
+            retro-tap; 
+            
             bindings = <&kp>, <&kp>;
         };
 
@@ -86,7 +95,7 @@ behaviors {
         td_a: tap_dance_a {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM_MS>;
+            tapping-term-ms = <TD_TERM_MS>;
             bindings = <&kp A>, <&hm_mod LGUI A>;
         };
 
@@ -94,7 +103,7 @@ behaviors {
         td_s: tap_dance_s {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM_MS>;
+            tapping-term-ms = <TD_TERM_MS>;
             bindings = <&kp S>, <&hm_mod LALT S>;
         };
 
@@ -102,7 +111,7 @@ behaviors {
         td_d: tap_dance_d {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM_MS>;
+            tapping-term-ms = <TD_TERM_MS>;
             bindings = <&kp D>, <&hm_mod LCTRL D>;
         };
 
@@ -110,7 +119,7 @@ behaviors {
         td_f: tap_dance_f {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM_MS>;
+            tapping-term-ms = <TD_TERM_MS>;
             bindings = <&kp F>, <&hm_mod LSHFT F>;
         };
 
@@ -120,7 +129,7 @@ behaviors {
         td_j: tap_dance_j {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM_MS>;
+            tapping-term-ms = <TD_TERM_MS>;
             bindings = <&kp J>, <&hm_mod RSHFT J>;
         };
 
@@ -128,7 +137,7 @@ behaviors {
         td_k: tap_dance_k {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM_MS>;
+            tapping-term-ms = <TD_TERM_MS>;
             bindings = <&kp K>, <&hm_mod RCTRL K>;
         };
 
@@ -136,7 +145,7 @@ behaviors {
         td_l: tap_dance_l {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM_MS>;
+            tapping-term-ms = <TD_TERM_MS>;
             bindings = <&kp L>, <&hm_mod RALT L>;
         };
 
@@ -144,7 +153,7 @@ behaviors {
         td_semi: tap_dance_semi {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM_MS>;
+            tapping-term-ms = <TD_TERM_MS>;
             bindings = <&kp SEMI>, <&hm_mod RGUI SEMI>;
         };
     };
