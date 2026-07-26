@@ -146,4 +146,4 @@
             sensor-bindings = <&scroll_encoder>;
         };
     };
-};s
+};
