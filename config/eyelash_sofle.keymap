@@ -95,7 +95,6 @@
                 <&tog 4>;        /* 2x tap = toggle Layer 4 */
         };
     };
-};
 
     scroll_encoder: scroll_encoder {
         compatible = "zmk,behavior-sensor-rotate";
