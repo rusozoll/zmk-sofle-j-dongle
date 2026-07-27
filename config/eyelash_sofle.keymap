@@ -35,10 +35,6 @@
 };
 
 / {
-    /* 
-     * COMBO: Pressing F (pos 30) + J (pos 33) together toggles Layer 1 (HRM) on/off.
-     * Removed the layer restriction so transparent fall-through doesn't block it.
-     */
     combos {
         compatible = "zmk,combos";
         
@@ -50,7 +46,7 @@
     };
 
     behaviors {
-        /* Left Hand Home Row Mods - Triggers ONLY when RIGHT-HAND keys are pressed */
+        /* Left Hand Home Row Mods */
         hm_left: home_row_mod_left {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -67,7 +63,7 @@
             bindings = <&kp>, <&kp>;
         };
 
-        /* Right Hand Home Row Mods - Triggers ONLY when LEFT-HAND keys are pressed */
+        /* Right Hand Home Row Mods */
         hm_right: home_row_mod_right {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -84,12 +80,11 @@
             bindings = <&kp>, <&kp>;
         };
 
-        /* Tap Dance to enable the 10 Key on the Right Hand */
+        /* Tap Dance for 10Key Layer Toggle */
         alt_td4: tap_dance_alt_layer4 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
-
             bindings =
                 <&kp LEFT_ALT>,  /* 1x tap or hold = Left Alt */
                 <&tog 4>;        /* 2x tap = toggle Layer 4 */
@@ -123,7 +118,7 @@
     keymap {
         compatible = "zmk,keymap";
 
-        /* Layer 0: Pure AlphaNum (Base Layer) */
+        /* Layer 0: Base Layer */
         layer0 {
             bindings = <
 &kp GRAVE   &kp N1     &kp N2        &kp N3        &kp N4    &kp N5       &kp UP_ARROW     &kp N6     &kp N7     &kp N8     &kp N9           &kp N0      &kp BACKSPACE
@@ -136,50 +131,46 @@
             display-name = "AlphaNum";
         };
 
-        /* 
-         * Layer 1: Bilateral Home Row Mods Overlay
-         * Placed immediately above Layer 0 so momentary holds on higher layers (&mo 2, &mo 3)
-         * sit ON TOP of it and override home row mods completely!
-         */
+        /* Layer 1: Bilateral Home Row Mods Overlay */
         layer_1 {
             bindings = <
-&trans  &trans                &trans               &trans                &trans                &trans  &trans  &trans  &trans                 &trans                &trans               &trans                 &trans
-&trans  &trans                &trans               &trans                &trans                &trans  &trans  &trans  &trans                 &trans                &trans               &trans                 &trans
-&trans  &hm_left LGUI A       &hm_left LALT S      &hm_left LCTRL D      &hm_left LSHFT F      &trans  &trans  &trans  &hm_right RSHFT J      &hm_right RCTRL K     &hm_right RALT L     &hm_right RGUI SEMI    &trans
-&trans  &trans                &trans               &trans                &trans                &trans  &trans  &trans  &trans                 &trans                &trans               &trans                 &trans
-&trans  &trans                &trans               &trans                &trans                &trans  &trans  &trans  &trans                 &trans                &trans               &trans
+&trans  &trans                &trans                &trans                &trans                &trans  &trans  &trans  &trans                &trans                &trans               &trans                 &trans
+&trans  &trans                &trans                &trans                &trans                &trans  &trans  &trans  &trans                &trans                &trans               &trans                 &trans
+&trans  &hm_left LGUI A       &hm_left LALT S       &hm_left LCTRL D      &hm_left LSHFT F      &trans  &trans  &trans  &hm_right RSHFT J     &hm_right RCTRL K     &hm_right RALT L     &hm_right RGUI SEMI    &trans
+&trans  &trans                &trans                &trans                &trans                &trans  &trans  &trans  &trans                &trans                &trans               &trans                 &trans
+&trans  &trans                &trans                &trans                &trans                &trans  &trans  &trans  &trans                &trans                &trans
             >;
             display-name = "BilateralHRM";
             sensor-bindings = <&scroll_encoder>;
         };
 
-        /* Layer 2: MoveMouseMedia (Activated by &mo 2) */
+        /* Layer 2: MoveMouseMedia (Activated while holding &mo 2) */
         layer_2 {
             bindings = <
-&kp F1     &kp F2     &kp F3         &kp F4          &kp F5      &kp F6     &mmv MOVE_UP     &kp F7      &kp F8      &kp F9      &kp F10    &kp F11           &kp F12
-&kp HOME   &kp END    &mkp LCLK      &mkp MCLK       &mkp RCLK   &mkp MB4   &mmv MOVE_DOWN   &none       &none       &kp UP      &none      &kp MINUS         &kp EQUAL
-&kp PG_UP  &none      &none          &none           &none       &mkp MB5   &mmv MOVE_LEFT   &none       &kp LEFT    &kp DOWN    &kp RIGHT  &kp LEFT_BRACKET  &kp RIGHT_BRACKET
-&kp PG_DN  &kp INSERT &none          &none           &none       &none      &mmv MOVE_RIGHT  &none       &none       &none       &none      &none             &none
-&kp C_MUTE &kp LCTRL  &kp LEFT_GUI   &alt_td4        &kp ENTER   &mo 2      &mkp LCLK        &none       &kp SPACE   &mo 3       &kp RCTRL  &kp DELETE
+&kp F1     &kp F2     &kp F3         &kp F4          &kp F5      &kp F6     &mmv MOVE_UP     &kp F7     &kp F8     &kp F9     &kp F10    &kp F11           &kp F12
+&kp HOME   &kp END    &mkp LCLK      &mkp MCLK       &mkp RCLK   &mkp MB4   &mmv MOVE_DOWN   &none      &none      &kp UP     &none      &kp MINUS         &kp EQUAL
+&kp PG_UP  &none      &none          &none           &none       &mkp MB5   &mmv MOVE_LEFT   &none      &kp LEFT   &kp DOWN   &kp RIGHT  &kp LEFT_BRACKET  &kp RIGHT_BRACKET
+&kp PG_DN  &kp INSERT &none          &none           &none       &none      &mmv MOVE_RIGHT  &none      &none      &none      &none      &none             &none
+&kp C_MUTE &kp LCTRL  &kp LEFT_GUI   &alt_td4        &kp ENTER   &trans     &mkp LCLK        &none      &kp SPACE  &mo 3      &kp RCTRL  &kp DELETE
             >;
             display-name = "MoveMouseMedia";
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
         };
 
-        /* Layer 3: BoardControl (Activated by &mo 4) */
+        /* Layer 3: BoardControl (Activated while holding &mo 3) */
         layer_3 {
             bindings = <
 &none      &bt BT_SEL 0 &bt BT_SEL 1   &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &none     &rgb_ug RGB_ON  &rgb_ug RGB_BRI &rgb_ug RGB_HUI &rgb_ug RGB_SPI &rgb_ug RGB_SAI &rgb_ug RGB_EFF
 &none      &bt BT_CLR   &bt BT_CLR_ALL &none        &none        &none        &none     &rgb_ug RGB_OFF &rgb_ug RGB_BRD &rgb_ug RGB_HUD &rgb_ug RGB_SPD &rgb_ug RGB_SAD &rgb_ug RGB_EFR
 &none      &out OUT_USB &out OUT_BLE   &none        &trans       &none        &none     &none           &trans          &none           &none           &none           &none
 &none      &sys_reset   &soft_off      &bootloader  &none        &none        &none     &none           &none           &sys_reset      &soft_off       &bootloader     &none
-&kp C_MUTE &kp LCTRL    &kp LEFT_GUI   &alt_td4     &kp ENTER    &mo 2        &mkp LCLK &tog 1          &kp SPACE       &mo 3           &kp RCTRL       &kp DELETE
+&kp C_MUTE &kp LCTRL    &kp LEFT_GUI   &alt_td4     &kp ENTER    &mo 2        &mkp LCLK &tog 1          &kp SPACE       &trans          &kp RCTRL       &kp DELETE
             >;
             display-name = "BoardControl";
             sensor-bindings = <&scroll_encoder>;
         };
 
-        /* Layer 4: 10key */
+        /* Layer 4: 10key (Toggled on/off with double-tap alt_td4) */
         layer_4 {
             bindings = <
 &none      &none     &none        &none        &none     &none &none &kp KP_NUM  &kp KP_SLASH  &kp KP_ASTERISK  &kp KP_MINUS  &none      &kp BACKSPACE
