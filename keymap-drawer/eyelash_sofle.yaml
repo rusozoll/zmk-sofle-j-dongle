@@ -58,11 +58,11 @@ layers:
   - $$mdi:apple-keyboard-command$$
   - '&alt_td4'
   - {t: '$$mdi:keyboard-return$$', type: enter}
-  - BoardControl
+  - MoveMouseMedia
   - {t: '$$mdi:keyboard-return$$', type: enter}
-  - {t: MoveMouseMedia, h: toggle}
+  - {t: BilateralHRM, h: toggle}
   - $$mdi:keyboard-space$$
-  - 10key
+  - BoardControl
   - $$mdi:apple-keyboard-control$$
   - $$mdi:backspace-reverse-outline$$
   BilateralHRM:
@@ -188,7 +188,7 @@ layers:
   - $$mdi:apple-keyboard-command$$
   - '&alt_td4'
   - {t: '$$mdi:keyboard-return$$', type: enter}
-  - MoveMouseMedia
+  - {t: MoveMouseMedia, type: held}
   - $$mdi:mouse-left-click-outline$$
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - $$mdi:keyboard-space$$
@@ -253,11 +253,11 @@ layers:
   - $$mdi:apple-keyboard-command$$
   - '&alt_td4'
   - {t: '$$mdi:keyboard-return$$', type: enter}
-  - {t: MoveMouseMedia, type: held}
+  - {t: MoveMouseMedia, type: held alternate}
   - $$mdi:mouse-left-click-outline$$
   - {t: BilateralHRM, h: toggle}
   - $$mdi:keyboard-space$$
-  - {t: BoardControl, type: held alternate}
+  - {t: BoardControl, type: held}
   - $$mdi:apple-keyboard-control$$
   - $$mdi:backspace-reverse-outline$$
   10key:
@@ -322,7 +322,7 @@ layers:
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - KP 0
   - KP 0
-  - {t: KP DOT, type: held}
+  - KP DOT
   - KP ENTER
   - KP ENTER
 combos:
