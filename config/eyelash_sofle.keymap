@@ -85,16 +85,16 @@
         };
 
         /* Tap Dance to enable the 10 Key on the Right Hand */
-    alt_td4: tap_dance_alt_layer4 {
-      compatible = "zmk,behavior-tap-dance";
-      #binding-cells = <0>;
-      tapping-term-ms = <200>;
+        alt_td4: tap_dance_alt_layer4 {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
 
-      bindings =
-        <&ht LALT>,   // 1x tap (this should produce Alt tap/press)
-        <&tog 4>;     // 2x press (toggle layer 4)
+            bindings =
+                <&kp LEFT_ALT>,  /* 1x tap or hold = Left Alt */
+                <&tog 4>;        /* 2x tap = toggle Layer 4 */
+        };
     };
-  };
 };
 
     scroll_encoder: scroll_encoder {
