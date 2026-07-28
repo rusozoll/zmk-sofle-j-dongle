@@ -57,10 +57,10 @@ layers:
   - $$mdi:apple-keyboard-control$$
   - $$mdi:apple-keyboard-command$$
   - '&alt_td4'
-  - {t: '$$mdi:keyboard-return$$', type: enter}
+  - $$mdi:keyboard-space$$
   - MoveMouseMedia
   - {t: '$$mdi:keyboard-return$$', type: enter}
-  - {t: BilateralHRM, h: toggle}
+  - {t: '$$mdi:keyboard-return$$', type: enter}
   - $$mdi:keyboard-space$$
   - BoardControl
   - $$mdi:apple-keyboard-control$$
@@ -159,9 +159,9 @@ layers:
   - {t: '=', s: +}
   - PG UP
   - {t: '$$mdi:minus-circle-outline$$', type: none}
-  - {t: '$$mdi:minus-circle-outline$$', type: none}
-  - {t: '$$mdi:minus-circle-outline$$', type: none}
-  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - $$mdi:volume-low$$
+  - $$mdi:volume-off$$
+  - $$mdi:volume-high$$
   - '&mkp MB5'
   - {t: '$$mdi:menu-left$$', s: '$$mdi:mouse$$'}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
@@ -172,9 +172,9 @@ layers:
   - {t: ']', s: '}'}
   - PG DN
   - Ins
-  - {t: '$$mdi:minus-circle-outline$$', type: none}
-  - {t: '$$mdi:minus-circle-outline$$', type: none}
-  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - $$mdi:skip-previous$$
+  - PLAY PAUSE
+  - $$mdi:skip-next$$
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:menu-right$$', s: '$$mdi:mouse$$'}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
@@ -187,10 +187,10 @@ layers:
   - $$mdi:apple-keyboard-control$$
   - $$mdi:apple-keyboard-command$$
   - '&alt_td4'
-  - {t: '$$mdi:keyboard-return$$', type: enter}
+  - $$mdi:keyboard-space$$
   - {type: held}
   - $$mdi:mouse-left-click-outline$$
-  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:keyboard-return$$', type: enter}
   - $$mdi:keyboard-space$$
   - BoardControl
   - $$mdi:apple-keyboard-control$$
@@ -252,10 +252,10 @@ layers:
   - $$mdi:apple-keyboard-control$$
   - $$mdi:apple-keyboard-command$$
   - '&alt_td4'
-  - {t: '$$mdi:keyboard-return$$', type: enter}
+  - $$mdi:keyboard-space$$
   - {t: MoveMouseMedia, type: held alternate}
   - $$mdi:mouse-left-click-outline$$
-  - {t: BilateralHRM, h: toggle}
+  - ENTER/
   - $$mdi:keyboard-space$$
   - {type: held}
   - $$mdi:apple-keyboard-control$$
@@ -317,7 +317,7 @@ layers:
   - $$mdi:apple-keyboard-control$$
   - $$mdi:apple-keyboard-command$$
   - '&alt_td4'
-  - {t: '$$mdi:keyboard-return$$', type: enter}
+  - $$mdi:keyboard-space$$
   - MoveMouseMedia
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - KP 0
@@ -326,5 +326,5 @@ layers:
   - KP ENTER
   - KP ENTER
 combos:
-- p: [30, 34]
+- p: [30, 34, 61]
   k: {t: BilateralHRM, h: toggle}
