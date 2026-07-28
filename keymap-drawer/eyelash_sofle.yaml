@@ -255,7 +255,7 @@ layers:
   - $$mdi:keyboard-space$$
   - {t: MoveMouseMedia, type: held alternate}
   - $$mdi:mouse-left-click-outline$$
-  - ENTER/
+  - {t: '$$mdi:keyboard-return$$', type: enter}
   - $$mdi:keyboard-space$$
   - {type: held}
   - $$mdi:apple-keyboard-control$$
