@@ -210,8 +210,8 @@ layers:
   - RGB SAI
   - RGB EFF
   - OUT USB
-  - {t: '$$mdi:bluetooth-connect$$', h: '5'}
-  - {t: '$$mdi:bluetooth-connect$$', h: '6'}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
