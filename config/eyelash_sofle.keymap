@@ -169,7 +169,7 @@
             display-name = "BoardControl";
             sensor-bindings = <&scroll_encoder>;
         };
-f
+
         /* Layer 4: 10key (Toggled on/off with double-tap alt_td4) */
         layer_4 {
             bindings = <
