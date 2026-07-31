@@ -160,11 +160,11 @@
         /* Layer 3: BoardControl (Activated while holding &mo 3) */
         layer_3 {
             bindings = <
-&none      &bt BT_SEL 0 &bt BT_SEL 1   &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &none     &rgb_ug RGB_ON  &rgb_ug RGB_BRI &rgb_ug RGB_HUI &rgb_ug RGB_SPI &rgb_ug RGB_SAI &rgb_ug RGB_EFF
-&none      &bt BT_CLR   &bt BT_CLR_ALL &none        &none        &none        &none     &rgb_ug RGB_OFF &rgb_ug RGB_BRD &rgb_ug RGB_HUD &rgb_ug RGB_SPD &rgb_ug RGB_SAD &rgb_ug RGB_EFR
-&none      &out OUT_USB &out OUT_BLE   &none        &trans       &none        &none     &none           &trans          &none           &none           &none           &none
-&none      &sys_reset   &soft_off      &bootloader  &none        &none        &none     &none           &none           &sys_reset      &soft_off       &bootloader     &none
-&kp C_MUTE &kp LCTRL    &kp LEFT_GUI   &alt_td4     &kp SPACE    &mo 2        &mkp LCLK &kp ENTER       &kp SPACE       &trans          &kp RCTRL       &kp DELETE
+&out OUT_BLE &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &none      &rgb_ug RGB_ON  &rgb_ug RGB_BRI &rgb_ug RGB_HUI &rgb_ug RGB_SPI &rgb_ug RGB_SAI &rgb_ug RGB_EFF
+&out OUT_USB &bt BT_SEL 5 &bt BT_SEL 6 &none        &none        &none        &none      &rgb_ug RGB_OFF &rgb_ug RGB_BRD &rgb_ug RGB_HUD &rgb_ug RGB_SPD &rgb_ug RGB_SAD &rgb_ug RGB_EFR
+&none        &none        &none        &none        &trans       &none        &none      &none           &trans          &none           &none           &none           &none
+&sys_reset   &none        &none        &none        &none        &none        &none      &none           &none           &none           &none           &none           &sys_reset
+&kp C_MUTE   &kp LCTRL    &kp LEFT_GUI &alt_td4     &kp SPACE    &mo 2        &bt BT_CLR &kp ENTER       &kp SPACE       &trans          &kp RCTRL       &kp DELETE
             >;
             display-name = "BoardControl";
             sensor-bindings = <&scroll_encoder>;
