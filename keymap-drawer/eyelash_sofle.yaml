@@ -254,7 +254,7 @@ layers:
   - '&alt_td4'
   - $$mdi:keyboard-space$$
   - {t: MoveMouseMedia, type: held alternate}
-  - BT CLR ALL
+  - $$mdi:bluetooth-off$$
   - {t: '$$mdi:keyboard-return$$', type: enter}
   - $$mdi:keyboard-space$$
   - {type: held}
