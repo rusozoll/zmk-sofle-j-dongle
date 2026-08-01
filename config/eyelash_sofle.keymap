@@ -164,7 +164,7 @@
 &out OUT_USB &none        &none        &none        &none        &none        &none      &rgb_ug RGB_OFF &rgb_ug RGB_BRD &rgb_ug RGB_HUD &rgb_ug RGB_SPD &rgb_ug RGB_SAD &rgb_ug RGB_EFR
 &none        &none        &none        &none        &trans       &none        &none      &none           &trans          &none           &none           &none           &none
 &bootloader  &none        &none        &none        &none        &none        &none      &none           &none           &none           &none           &none           &bootloader
-&kp C_MUTE   &kp LCTRL    &kp LEFT_GUI &alt_td4     &kp SPACE    &mo 2        &bt BT_CLR_ALL &kp ENTER   &kp SPACE       &trans          &kp RCTRL       &kp DELETE
+&kp C_MUTE   &kp LCTRL    &kp LEFT_GUI &alt_td4     &kp SPACE    &mo 2        &bt BT_CLR &kp ENTER   &kp SPACE       &trans          &kp RCTRL       &kp DELETE
             >;
             display-name = "BoardControl";
             sensor-bindings = <&scroll_encoder>;
