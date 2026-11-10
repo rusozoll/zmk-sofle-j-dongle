@@ -56,7 +56,7 @@ layers:
   - $$mdi:volume-off$$
   - $$mdi:apple-keyboard-control$$
   - $$mdi:apple-keyboard-command$$
-  - '&alt_td4'
+  - $$mdi:apple-keyboard-option$$
   - $$mdi:keyboard-space$$
   - MoveMouseMedia
   - {t: '$$mdi:keyboard-return$$', type: enter}
